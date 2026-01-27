@@ -1,19 +1,29 @@
 import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Home } from './pages/Home'
+import { Routes, Route } from 'react-router-dom'
+import { Home } from '@/pages/Home'
+import { Navbar } from '@/layout/Navbar'
+import { Movies } from '@/pages/Movies'
+import { Trending } from '@/pages/Trending'
 
 function App() {
 
 
   return (
-    <main className=''>
+    <div className="min-h-screen overflow-x-hidden">
+      <Navbar />
+      <main>
 
-      <Router>
         <Routes>
           <Route path='/' element={< Home />} />
+          <Route path='/movies' element={< Movies />}>
+            {/* <Route path='/' element={< Home />} /> */}
+          </Route>
+          <Route path='/trending' element={< Trending />} />
+          {/* <Route path='/' element={< Home />} /> */}
         </Routes>
-      </Router>
-    </main>
+
+      </main>
+    </div>
   )
 }
 
