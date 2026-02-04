@@ -131,6 +131,10 @@
    .animate-marquee {
     animation: marquee 30s linear infinite;
   }
+
+  .animate-hero-marquee {
+    animation: marquee 90s linear infinite;
+  }
   .animation-delay-100 {
     animation-delay: 100ms;
   }
