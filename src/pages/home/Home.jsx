@@ -1,7 +1,7 @@
 import { Hero } from "@/pages/home/sections/Hero";
 import { useState } from "react";
 import { Trending } from "./sections/Trending";
-import { MovieCard } from "../../components/MovieCard";
+import { Popular } from "./sections/Popular";
 
 export const Home = () => {
 
@@ -12,6 +12,9 @@ export const Home = () => {
 
             {/* trending section */}
             <Trending />
+
+            {/* Popular Section */}
+            <Popular />
         </main>
 
     );
