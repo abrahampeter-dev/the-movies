@@ -7,7 +7,7 @@ const navLinks = [
     { href: "/", label: "Home" },
     {
         href: "/movies", label: "Movies", sub: [
-            { href: "/movies/popular", label: "Popular" },
+            { href: "/movies", label: "Popular" },
             { href: "/movies/top-rated", label: "Top Rated" },
             { href: "/movies/upcoming", label: "Upcoming" },
             { href: "/movies/all-movies", label: "All Movies" },
