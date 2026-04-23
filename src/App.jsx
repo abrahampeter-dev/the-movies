@@ -4,6 +4,7 @@ import { Home } from '@/pages/home/Home'
 import { Navbar } from '@/layout/Navbar'
 import { Movies } from '@/pages/Movies'
 import { Trending } from '@/pages/Trending'
+import { Footer } from './layout/Footer'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         </Routes>
 
       </main>
+      <Footer />
     </div>
   )
 }
