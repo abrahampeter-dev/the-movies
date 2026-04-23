@@ -1,9 +1,15 @@
-const API_KEY = "85550b8625d321a11282fbb7b93f982c";
-const BASE_URL = "https://api.themoviedb.org/3";
+import axios from "./axios";
+
+export const getPopularMovies = async (page = 1) => {
+  const res = await axios.get(`/movie/popular?page=${page}`);
+  console.log("heelo", res.data.results);
+  return {
+    results: res.data.results,
+    totalPages: res.data.total_pages,
+  };
+};
 
 //
-export const getPopularMovies = async () => {
-  const res = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
-  const data = await res.json();
-  return data.results;
-};
+// export const getMovieDetails = async () => {
+// const res  =await
+// }
