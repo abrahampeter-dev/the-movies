@@ -33,7 +33,7 @@ export const MovieCard = ({ image, title, year, type = "MV", onFavorite, showFav
                             <div className="rounded-lg h-65">
                                 <img
                                     src={image}
-                                    alt="junabra"
+                                    alt="img"
                                     className="w-full h-full object-cover aspect-4/5 rounded-t-xl"
                                 />
 

@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-export const Search = () => {
+export const Search = ({ onSearch }) => {
 
     const [searchQ, setSearchQ] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!searchQ.trim()) return;
-        onSearch(searchQ);
+        onSearch?.(searchQ);
     };
 
 

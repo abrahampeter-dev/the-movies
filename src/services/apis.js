@@ -2,7 +2,19 @@ import axios from "./axios";
 
 export const getPopularMovies = async (page = 1) => {
   const res = await axios.get(`/movie/popular?page=${page}`);
-  console.log("heelo", res.data.results);
+  return {
+    results: res.data.results,
+    totalPages: res.data.total_pages,
+  };
+};
+
+export const getSearchMovie = async (query, page = 1) => {
+  const res = await axios.get("/search/movie", {
+    params: {
+      query,
+      page,
+    },
+  });
   return {
     results: res.data.results,
     totalPages: res.data.total_pages,
@@ -10,6 +22,36 @@ export const getPopularMovies = async (page = 1) => {
 };
 
 //
-// export const getMovieDetails = async () => {
-// const res  =await
-// }
+export const getMovieDetails = async (id) => {
+  const res = await Promise.allSettled([
+    //
+    axios.get(`/movie/${id}`),
+    //
+    axios.get(`/movie/${id}/credits`),
+    //
+    axios.get(`/movie/${id}/reviews`),
+    //
+    axios.get(`/movie/${id}/similar`),
+    //
+    axios.get(`/movie/${id}/videos`),
+  ]);
+
+  const [details, credits, reviews, similar, videos] = res;
+
+  return {
+    //
+    ...(details.status === "fulfilled" ? details.value.data : {}),
+
+    //
+    cast: credits.status === "fulfilled" ? credits.value.data.cast : [],
+
+    //
+    reviews: reviews.status === "fulfilled" ? reviews.value.data.results : [],
+
+    //
+    similar: similar.status === "fulfilled" ? similar.value.data.results : [],
+
+    //
+    videos: videos.status === "fulfilled" ? videos.value.data.results : [],
+  };
+};

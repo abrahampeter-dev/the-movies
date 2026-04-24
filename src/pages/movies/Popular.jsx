@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { MovieCard } from "@/components/MovieCard";
 import { Search } from "@/components/Search";
-import { getPopularMovies } from "@/services/apis";
+import { getPopularMovies, getSearchMovie } from "@/services/apis";
+
 
 export const Popular = () => {
 
@@ -13,12 +14,25 @@ export const Popular = () => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
+    //
+    const [query, setQuery] = useState("");
+
     useEffect(() => {
 
         const loadMovies = async () => {
             setLoading(true);
             try {
-                const pMovies = await getPopularMovies(page);
+
+                let pMovies;
+
+                if (query) {
+                    //search
+                    pMovies = await getSearchMovie(query, page);
+                } else {
+                    //normal data
+                    pMovies = await getPopularMovies(page);
+                }
+
                 setMovies(pMovies.results);
                 setTotalPages(pMovies.totalPages);
             } catch (err) {
@@ -30,11 +44,20 @@ export const Popular = () => {
         }
 
         loadMovies(page);
-    }, [page]);
+    }, [page, query]);
+
+    //search function
+    const searchMovie = async (searchQ) => {
+        // e.preventDefault();
+        setQuery(searchQ);
+        setPage(1)
+
+
+    }
 
     return (
         <div className="py-32 relative overflow-hidden">
-            <Search />
+            <Search onSearch={searchMovie} />
             {error && <div className="error-message">{error}</div>}
             <div className="container mx-auto px-1 lg:px-6">
                 {
@@ -69,12 +92,12 @@ export const Popular = () => {
                                 <div className="flex justify-center items-center gap-2 py-6">
                                     <button onClick={() => setPage((p) => Math.max(p - 1, 1))}
                                         disabled={page === 1}
-                                        className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+                                        className="px-8 py-2 text-white bg-muted-foreground rounded disabled:opacity-50"
                                     >Prev</button>
-                                    <span className="text-sm">page {page} of {totalPages}</span>
+                                    <span className="text-sm">Page {page} of {totalPages}</span>
                                     <button onClick={() => setPage((p) => (p < totalPages ? p + 1 : p))}
                                         disabled={page === totalPages}
-                                        className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+                                        className="px-8 py-2 bg-primary-foreground text-primary rounded disabled:opacity-50"
                                     >Next</button>
                                 </div>
                             </>
