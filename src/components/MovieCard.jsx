@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const MovieCard = ({ image, title, year, type = "MV", onFavorite, showFav = true, display = "picture", id, to }) => {
+export const MovieCard = ({ image, title, year, type = "MV", onFavorite, showFav = true, display = "picture", id, to, rate }) => {
     const formattedDate = new Date(year).toLocaleDateString("en-GB", {
         day: "2-digit",
         month: "short",
@@ -45,6 +45,13 @@ export const MovieCard = ({ image, title, year, type = "MV", onFavorite, showFav
                                     {type}
                                 </span>
                             </div>
+                            <div className="absolute bottom-0 left-1 px-3 py-2">
+                                <span className="text-[10px] font-extrabold text-primary">
+                                    {rate?.toFixed(1)}
+                                </span>
+                            </div>
+
+
 
 
                             {/* topRight */}
@@ -90,6 +97,7 @@ export const MovieCard = ({ image, title, year, type = "MV", onFavorite, showFav
                                     {type}
                                 </span>
                             </div>
+
 
                             {/* favorite */}
                             {showFav && (

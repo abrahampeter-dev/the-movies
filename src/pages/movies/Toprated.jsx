@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { MovieCard } from "@/components/MovieCard";
 import { Search } from "@/components/Search";
 import { getPopularMovies, getSearchMovie } from "@/services/apis";
-
-
-export const Popular = () => {
+import { getTopRatedMovies } from "../../services/apis";
+export const Toprated = () => {
 
     const [movies, setMovies] = useState([]);
     const [error, setError] = useState(null);
@@ -22,22 +21,21 @@ export const Popular = () => {
         const loadMovies = async () => {
             setLoading(true);
             try {
-
-                let pMovies;
+                let topMovies;
 
                 if (query) {
                     //search
-                    pMovies = await getSearchMovie(query, page);
+                    topMovies = await getSearchMovie(query, page);
                 } else {
                     //normal data
-                    pMovies = await getPopularMovies(page);
+                    topMovies = await getTopRatedMovies(page);
                 }
 
-                setMovies(pMovies.results);
-                setTotalPages(pMovies.totalPages);
+                setMovies(topMovies.results);
+                setTotalPages(topMovies.totalPages);
             } catch (err) {
                 console.log(err)
-                setError("Fail to load popular movies");
+                setError("Fail to load top rated movies");
             } finally {
                 setLoading(false);
             }
@@ -54,7 +52,6 @@ export const Popular = () => {
 
 
     }
-
     return (
         <div className="py-32 relative overflow-hidden">
             <Search onSearch={searchMovie} />
@@ -106,5 +103,5 @@ export const Popular = () => {
 
             </div>
         </div>
-    );
+    )
 }

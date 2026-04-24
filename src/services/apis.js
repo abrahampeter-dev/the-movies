@@ -8,6 +8,15 @@ export const getPopularMovies = async (page = 1) => {
   };
 };
 
+//
+export const getTopRatedMovies = async (page = 1) => {
+  const res = await axios.get("/movie/top_rated", { params: { page } });
+  return {
+    results: res.data.results,
+    totalPages: res.data.total_pages,
+  };
+};
+
 export const getSearchMovie = async (query, page = 1) => {
   const res = await axios.get("/search/movie", {
     params: {

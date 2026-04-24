@@ -92,7 +92,7 @@ export const MovieDetails = () => {
 
                         {/* Meta */}
                         <div className="mt-4 flex flex-wrap justify-center md:justify-start gap-3 text-sm text-gray-300">
-                            <span>⭐ {movie.vote_average}</span>
+                            <span>⭐ {movie.vote_average?.toFixed(1)}</span>
                             <span>{movie.vote_count} votes</span>
                             <span>{movie.runtime} min</span>
                             <span>{new Date(movie.release_date).getFullYear()}</span>
@@ -212,6 +212,7 @@ export const MovieDetails = () => {
                                 image={`https://image.tmdb.org/t/p/w500${m.poster_path}`}
                                 title={m.title}
                                 year={m.release_date}
+                                rate={m.vote_average}
                                 id={m.id}
                                 showFav={false}
                                 to={({ id }) => `/movies/${id}`}
