@@ -59,7 +59,14 @@ export const Popular = () => {
         <div className="py-32 relative overflow-hidden">
             <Search onSearch={searchMovie} />
             {error && <div className="error-message">{error}</div>}
-            <div className="container mx-auto px-1 lg:px-6">
+            <div className="container mx-auto px-4 md:px-1 lg:px-6">
+                {/* HEADER */}
+                <div className="gap-4 mb-6">
+                    <h1 className="text-2xl md:text-4xl font-bold">
+                        Movies
+                    </h1>
+
+                </div>
                 {
                     loading ? (
                         <div className="flex flex-col justify-center items-center h-40 gap-3">

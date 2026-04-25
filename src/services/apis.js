@@ -17,6 +17,16 @@ export const getTopRatedMovies = async (page = 1) => {
   };
 };
 
+//
+export const getUpcomingMovies = async (page = 1) => {
+  const res = await axios.get("/movie/upcoming", { params: { page } });
+  return {
+    results: res.data.results,
+    totalPages: res.data.total_pages,
+    dates: res.data.dates,
+  };
+};
+
 export const getSearchMovie = async (query, page = 1) => {
   const res = await axios.get("/search/movie", {
     params: {

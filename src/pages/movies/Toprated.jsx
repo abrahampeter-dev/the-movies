@@ -55,13 +55,24 @@ export const Toprated = () => {
     return (
         <div className="py-32 relative overflow-hidden">
             <Search onSearch={searchMovie} />
-            {error && <div className="error-message">{error}</div>}
-            <div className="container mx-auto px-1 lg:px-6">
+            <div className="container mx-auto px-4 md:px-1 lg:px-6">
+
+                {/* HEADER */}
+                <div className="gap-4 mb-6">
+                    <h1 className="text-2xl md:text-4xl font-bold">
+                        Top Rated Movies
+                    </h1>
+
+                </div>
+
+                {/* error */}
+                {error && <div className="error-message">{error}</div>}
+
                 {
                     loading ? (
                         <div className="flex flex-col justify-center items-center h-40 gap-3">
                             <div className="w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
-                            <p className="text-gray-600 text-sm">Loading movies...</p>
+                            <p className="text-gray-600 text-sm">Loading top rated movies...</p>
                         </div>
                     )
 

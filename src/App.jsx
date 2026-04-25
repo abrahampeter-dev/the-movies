@@ -6,7 +6,8 @@ import { Trending } from '@/pages/Trending'
 import { Footer } from '@/layout/Footer'
 import { Popular } from '@/pages/movies/Popular'
 import { MovieDetails } from '@/pages/movies/MoviesDetail'
-import { Toprated } from './pages/movies/Toprated'
+import { Toprated } from '@/pages/movies/Toprated'
+import { UpcomingMovie } from '@/pages/movies/UpcomingMovie'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Route path='/' element={< Home />} />
           <Route path='/movies' element={< Popular />} />
           <Route path='/movies/top-rated' element={< Toprated />} />
+          <Route path='/movies/upcoming' element={< UpcomingMovie />} />
           <Route path='/movies/:id' element={< MovieDetails />} />
           <Route path='/trending' element={< Trending />} />
           {/* <Route path='/' element={< Home />} /> */}
