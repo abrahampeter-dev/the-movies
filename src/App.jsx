@@ -8,6 +8,7 @@ import { Popular } from '@/pages/movies/Popular'
 import { MovieDetails } from '@/pages/movies/MoviesDetail'
 import { Toprated } from '@/pages/movies/Toprated'
 import { UpcomingMovie } from '@/pages/movies/UpcomingMovie'
+import { PopularTv } from '@/pages/tv/PopularTv'
 
 function App() {
 
@@ -18,12 +19,18 @@ function App() {
       <main>
 
         <Routes>
+
           <Route path='/' element={< Home />} />
+
+          {/* movies */}
           <Route path='/movies' element={< Popular />} />
           <Route path='/movies/top-rated' element={< Toprated />} />
           <Route path='/movies/upcoming' element={< UpcomingMovie />} />
           <Route path='/movies/:id' element={< MovieDetails />} />
           <Route path='/trending' element={< Trending />} />
+
+          {/* tv */}
+          <Route path='/tv' element={<PopularTv />} />
           {/* <Route path='/' element={< Home />} /> */}
         </Routes>
 

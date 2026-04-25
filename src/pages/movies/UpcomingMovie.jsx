@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { MovieCard } from "@/components/MovieCard";
 import { getUpcomingMovies } from "@/services/apis";
-import { Loading } from "@/components/Loading";
-import { Error } from "../../components/Error";
+import { CustomError } from "../../components/Error";
+import { CustomLoading } from "../../components/Loading";
 
 export const UpcomingMovie = () => {
     const [movies, setMovies] = useState([]);
@@ -108,10 +108,10 @@ export const UpcomingMovie = () => {
                     </div>
                 </div>
                 {/* error */}
-                {error && !loading && <Error text={error} onRetry={loadMovies} />}
+                {error && !loading && <CustomError text={error} onRetry={loadMovies} />}
 
                 {/* LOADING */}
-                {loading ? <Loading text="Loading upcoming movies..." /> : (
+                {loading ? <CustomLoading text="Loading upcoming movies..." /> : (
                     <>
                         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
 

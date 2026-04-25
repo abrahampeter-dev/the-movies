@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
-import { MovieCard } from "@/components/MovieCard";
-import { getPopularMovies, getSearchMovie } from "@/services/apis";
-import { getTopRatedMovies } from "../../services/apis";
-import { Loading } from "@/components/Loading";
+import { useEffect, useState } from "react"
+import { getPopularTv, getSearchTv } from "../../services/apis";
 import { CustomSearch } from "../../components/Search";
 import { CustomError } from "../../components/Error";
 import { CustomLoading } from "../../components/Loading";
-export const Toprated = () => {
+import { MovieCard } from "@/components/MovieCard";
 
-    const [movies, setMovies] = useState([]);
+
+export const PopularTv = () => {
+
+    //
+    const [tvs, setTvs] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -19,77 +20,78 @@ export const Toprated = () => {
     //
     const [query, setQuery] = useState("");
 
-    const loadMovies = async () => {
+    //load tvs
+    const loadTvs = async () => {
         setLoading(true);
         setError(null);
 
         try {
-            let topMovies;
-
+            let pTvs;
             if (query) {
-                topMovies = await getSearchMovie(query, page);
+                //search
+                pTvs = await getSearchTv(query, page);
             } else {
-                topMovies = await getTopRatedMovies(page);
+                //normal data
+                pTvs = await getPopularTv(page);
             }
 
-            setMovies(topMovies.results);
-            setTotalPages(topMovies.totalPages);
+            setTvs(pTvs.results);
+            setTotalPages(pTvs.totalPages);
 
+            console.log(pTvs);
         } catch (err) {
-            console.log(err);
-            setError("Failed to load movies");
+            console.log(err)
+            setError("Fail to load tv series");
         } finally {
             setLoading(false);
         }
-    };
+    }
+
+    //search
+    const searchTv = async (searchQ) => {
+        setQuery(searchQ);
+        setPage(1);
+    }
 
     useEffect(() => {
-        loadMovies();
+        loadTvs();
     }, [page, query]);
 
-    //search function
-
-
-
-    const searchMovie = async (searchQ) => {
-        // e.preventDefault();
-        setQuery(searchQ);
-        setPage(1)
-
-
-    }
     return (
         <div className="py-32 relative overflow-hidden">
-            <CustomSearch onSearch={searchMovie} />
-            <div className="container mx-auto px-4 md:px-1 lg:px-6">
 
+            {/* search */}
+            <CustomSearch onSearch={searchTv} />
+
+
+            <div className="container mx-auto px-4 md:px-1 lg:px-6">
                 {/* HEADER */}
                 <div className="gap-4 mb-6">
                     <h1 className="text-2xl md:text-4xl font-bold">
-                        Top Rated Movies
+                        Tv Series
                     </h1>
 
                 </div>
 
                 {/* error */}
                 {error && !loading && <CustomError text={error} onRetry={loadMovies} />}
-
+                {/* tv series data */}
                 {
-                    loading ?
-                        <CustomLoading text="Loading top rated movies..." />
+                    loading ? <CustomLoading text="Loading tv series..." />
+
                         :
                         (
                             <>
                                 <div className="grid md:grid-cols-6 grid-cols-2 gap-4 py-4">
                                     {
-                                        movies.map((movie) => (
+                                        tvs.map((tv) => (
                                             <MovieCard
-                                                key={movie.id}
-                                                image={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                                                title={movie.title} year={movie.release_date}
-                                                rate={movie.vote_average}
+                                                key={tv.id}
+                                                image={`https://image.tmdb.org/t/p/w500${tv.poster_path}`}
+                                                title={tv.name} year={tv.first_air_date} type="TV"
+                                                rate={tv.vote_average}
                                                 showFav={false}
-                                                id={movie.id}
+                                                id={tv.id}
                                                 to={({ id }) => `/movies/${id}`}
 
                                             />
@@ -114,6 +116,7 @@ export const Toprated = () => {
                 }
 
             </div>
+
         </div>
     )
 }

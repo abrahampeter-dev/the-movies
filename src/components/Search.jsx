@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const Search = ({ onSearch }) => {
+export const CustomSearch = ({ onSearch }) => {
 
     const [searchQ, setSearchQ] = useState("");
 

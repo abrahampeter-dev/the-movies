@@ -1,4 +1,4 @@
-export const Error = ({ text, onRetry }) => {
+export const CustomError = ({ text, onRetry }) => {
     return (
         <div className="flex flex-col justify-center items-center h-40 gap-3 text-center">
 

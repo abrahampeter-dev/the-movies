@@ -74,3 +74,28 @@ export const getMovieDetails = async (id) => {
     videos: videos.status === "fulfilled" ? videos.value.data.results : [],
   };
 };
+
+//============ TV ===============//
+
+//
+export const getPopularTv = async (page = 1) => {
+  const res = await axios.get("/tv/popular", { params: { page } });
+  return {
+    results: res.data.results,
+    totalPages: res.data.total_pages,
+  };
+};
+
+//
+export const getSearchTv = async (query, page = 1) => {
+  const res = await axios.get("/search/tv", {
+    params: {
+      query,
+      page,
+    },
+  });
+  return {
+    results: res.data.results,
+    totalPages: res.data.total_pages,
+  };
+};

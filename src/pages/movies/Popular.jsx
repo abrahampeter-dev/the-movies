@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { MovieCard } from "@/components/MovieCard";
 import { Search } from "@/components/Search";
 import { getPopularMovies, getSearchMovie } from "@/services/apis";
-import { Error } from "../../components/Error";
+import { CustomError, Error } from "../../components/Error";
+import { CustomSearch } from "../../components/Search";
 
 
 export const Popular = () => {
@@ -38,7 +39,7 @@ export const Popular = () => {
             setTotalPages(pMovies.totalPages);
         } catch (err) {
             console.log(err)
-            setError("Fail to load popular movies");
+            setError("Fail to load movies");
         } finally {
             setLoading(false);
         }
@@ -56,7 +57,7 @@ export const Popular = () => {
 
     return (
         <div className="py-32 relative overflow-hidden">
-            <Search onSearch={searchMovie} />
+            <CustomSearch onSearch={searchMovie} />
             <div className="container mx-auto px-4 md:px-1 lg:px-6">
                 {/* HEADER */}
                 <div className="gap-4 mb-6">
@@ -66,7 +67,7 @@ export const Popular = () => {
 
                 </div>
 
-                {error && !loading && <Error text={error} onRetry={loadMovies} />}
+                {error && !loading && <CustomError text={error} onRetry={loadMovies} />}
 
                 {
                     loading ? (
