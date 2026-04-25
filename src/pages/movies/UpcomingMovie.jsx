@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { MovieCard } from "@/components/MovieCard";
 import { getUpcomingMovies } from "@/services/apis";
+import { Loading } from "@/components/Loading";
+import { Error } from "../../components/Error";
 
 export const UpcomingMovie = () => {
     const [movies, setMovies] = useState([]);
@@ -17,27 +19,39 @@ export const UpcomingMovie = () => {
     });
 
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    //  FETCH API PAGE 
-    useEffect(() => {
-        const loadMovies = async () => {
-            setLoading(true);
+
+    //
+    const loadMovies = async () => {
+        setLoading(true);
+        setError(null);
+        try {
 
             const data = await getUpcomingMovies(page);
 
             setMovies(data.results);
             setTotalPages(data.totalPages);
 
-            console.log(data);
-
             // setRange({
             //     from: today,
             //     to: data.dates?.maximum || "",
             // });
 
-            setLoading(false);
-        };
+            console.log(data);
+        } catch (err) {
+            console.log(err)
+            setError("Fail to load upcoming movies");
 
+        } finally {
+            setLoading(false);
+        }
+
+        setLoading(false);
+    };
+
+
+    useEffect(() => {
         loadMovies();
     }, [page]);
 
@@ -93,14 +107,11 @@ export const UpcomingMovie = () => {
 
                     </div>
                 </div>
+                {/* error */}
+                {error && !loading && <Error text={error} onRetry={loadMovies} />}
 
                 {/* LOADING */}
-                {loading ? (
-                    < div className="flex flex-col justify-center items-center h-40 gap-3">
-                        <div className="w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
-                        <p className="text-gray-600 text-sm">Loading upcoming movies...</p>
-                    </div>
-                ) : (
+                {loading ? <Loading text="Loading upcoming movies..." /> : (
                     <>
                         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
 

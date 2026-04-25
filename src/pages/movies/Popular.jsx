@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { MovieCard } from "@/components/MovieCard";
 import { Search } from "@/components/Search";
 import { getPopularMovies, getSearchMovie } from "@/services/apis";
+import { Error } from "../../components/Error";
 
 
 export const Popular = () => {
@@ -17,33 +18,33 @@ export const Popular = () => {
     //
     const [query, setQuery] = useState("");
 
-    useEffect(() => {
+    //load movies
+    const loadMovies = async () => {
+        setLoading(true);
+        setError(null);
+        try {
 
-        const loadMovies = async () => {
-            setLoading(true);
-            try {
+            let pMovies;
 
-                let pMovies;
-
-                if (query) {
-                    //search
-                    pMovies = await getSearchMovie(query, page);
-                } else {
-                    //normal data
-                    pMovies = await getPopularMovies(page);
-                }
-
-                setMovies(pMovies.results);
-                setTotalPages(pMovies.totalPages);
-            } catch (err) {
-                console.log(err)
-                setError("Fail to load popular movies");
-            } finally {
-                setLoading(false);
+            if (query) {
+                //search
+                pMovies = await getSearchMovie(query, page);
+            } else {
+                //normal data
+                pMovies = await getPopularMovies(page);
             }
-        }
 
-        loadMovies(page);
+            setMovies(pMovies.results);
+            setTotalPages(pMovies.totalPages);
+        } catch (err) {
+            console.log(err)
+            setError("Fail to load popular movies");
+        } finally {
+            setLoading(false);
+        }
+    }
+    useEffect(() => {
+        loadMovies();
     }, [page, query]);
 
     //search function
@@ -51,14 +52,11 @@ export const Popular = () => {
         // e.preventDefault();
         setQuery(searchQ);
         setPage(1)
-
-
     }
 
     return (
         <div className="py-32 relative overflow-hidden">
             <Search onSearch={searchMovie} />
-            {error && <div className="error-message">{error}</div>}
             <div className="container mx-auto px-4 md:px-1 lg:px-6">
                 {/* HEADER */}
                 <div className="gap-4 mb-6">
@@ -67,6 +65,9 @@ export const Popular = () => {
                     </h1>
 
                 </div>
+
+                {error && !loading && <Error text={error} onRetry={loadMovies} />}
+
                 {
                     loading ? (
                         <div className="flex flex-col justify-center items-center h-40 gap-3">

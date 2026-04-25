@@ -3,6 +3,8 @@ import { MovieCard } from "@/components/MovieCard";
 import { Search } from "@/components/Search";
 import { getPopularMovies, getSearchMovie } from "@/services/apis";
 import { getTopRatedMovies } from "../../services/apis";
+import { Loading } from "@/components/Loading";
+import { Error } from "@/components/Error";
 export const Toprated = () => {
 
     const [movies, setMovies] = useState([]);
@@ -16,35 +18,38 @@ export const Toprated = () => {
     //
     const [query, setQuery] = useState("");
 
-    useEffect(() => {
+    const loadMovies = async () => {
+        setLoading(true);
+        setError(null);
 
-        const loadMovies = async () => {
-            setLoading(true);
-            try {
-                let topMovies;
+        try {
+            let topMovies;
 
-                if (query) {
-                    //search
-                    topMovies = await getSearchMovie(query, page);
-                } else {
-                    //normal data
-                    topMovies = await getTopRatedMovies(page);
-                }
-
-                setMovies(topMovies.results);
-                setTotalPages(topMovies.totalPages);
-            } catch (err) {
-                console.log(err)
-                setError("Fail to load top rated movies");
-            } finally {
-                setLoading(false);
+            if (query) {
+                topMovies = await getSearchMovie(query, page);
+            } else {
+                topMovies = await getTopRatedMovies(page);
             }
-        }
 
-        loadMovies(page);
+            setMovies(topMovies.results);
+            setTotalPages(topMovies.totalPages);
+
+        } catch (err) {
+            console.log(err);
+            setError("Failed to load movies");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        loadMovies();
     }, [page, query]);
 
     //search function
+
+
+
     const searchMovie = async (searchQ) => {
         // e.preventDefault();
         setQuery(searchQ);
@@ -66,16 +71,11 @@ export const Toprated = () => {
                 </div>
 
                 {/* error */}
-                {error && <div className="error-message">{error}</div>}
+                {error && !loading && <Error text={error} onRetry={loadMovies} />}
 
                 {
-                    loading ? (
-                        <div className="flex flex-col justify-center items-center h-40 gap-3">
-                            <div className="w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div>
-                            <p className="text-gray-600 text-sm">Loading top rated movies...</p>
-                        </div>
-                    )
-
+                    loading ?
+                        <Loading text="Loading top rated movies..." />
                         :
                         (
                             <>
