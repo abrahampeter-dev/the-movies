@@ -92,7 +92,7 @@ export const PopularTv = () => {
                                                 rate={tv.vote_average}
                                                 showFav={false}
                                                 id={tv.id}
-                                                to={({ id }) => `/movies/${id}`}
+                                                to={({ id }) => `/tv-series/${id}`}
 
                                             />
                                         ))

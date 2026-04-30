@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { MovieCard } from "@/components/MovieCard";
 import { getPopularMovies, getSearchMovie } from "@/services/apis";
 import { getTopRatedMovies } from "../../services/apis";
-import { Loading } from "@/components/Loading";
 import { CustomSearch } from "../../components/Search";
 import { CustomError } from "../../components/Error";
 import { CustomLoading } from "../../components/Loading";

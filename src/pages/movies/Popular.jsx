@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { MovieCard } from "@/components/MovieCard";
-import { Search } from "@/components/Search";
 import { getPopularMovies, getSearchMovie } from "@/services/apis";
-import { CustomError, Error } from "../../components/Error";
+import { CustomError } from "../../components/Error";
 import { CustomSearch } from "../../components/Search";
 
 

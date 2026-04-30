@@ -9,6 +9,7 @@ import { MovieDetails } from '@/pages/movies/MoviesDetail'
 import { Toprated } from '@/pages/movies/Toprated'
 import { UpcomingMovie } from '@/pages/movies/UpcomingMovie'
 import { PopularTv } from '@/pages/tv/PopularTv'
+import { TvDetails } from './pages/tv/TvDetails'
 
 function App() {
 
@@ -31,6 +32,8 @@ function App() {
 
           {/* tv */}
           <Route path='/tv' element={<PopularTv />} />
+          <Route path='/tv-series/:id' element={< TvDetails />} />
+
           {/* <Route path='/' element={< Home />} /> */}
         </Routes>
 

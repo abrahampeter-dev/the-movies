@@ -99,3 +99,41 @@ export const getSearchTv = async (query, page = 1) => {
     totalPages: res.data.total_pages,
   };
 };
+
+//
+export const getTvDetails = async (id) => {
+  const res = await Promise.allSettled([
+    //
+    axios.get(`/tv/${id}`),
+
+    //
+    axios.get(`/tv/${id}/credits`),
+
+    //
+    axios.get(`/tv/${id}/reviews`),
+
+    //
+    axios.get(`/tv/${id}/similar`),
+
+    axios.get(`/tv/${id}/videos`),
+  ]);
+
+  const [details, credits, reviews, similar, videos] = res;
+
+  return {
+    //
+    ...(details.status === "fulfilled" ? details.value.data : {}),
+
+    //
+    cast: credits.status === "fulfilled" ? credits.value.data.cast : [],
+
+    //
+    reviews: reviews.status === "fulfilled" ? reviews.value.data.results : [],
+
+    //
+    similar: similar.status === "fulfilled" ? similar.value.data.results : [],
+
+    //
+    videos: videos.status === "fulfilled" ? videos.value.data.results : [],
+  };
+};
