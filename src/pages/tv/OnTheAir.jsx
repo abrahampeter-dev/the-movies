@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { getSearchTv, getTopReatedTv } from "../../services/apis";
-import { CustomSearch } from "../../components/Search";
-import { CustomError } from "../../components/Error";
-import { CustomLoading } from "../../components/Loading";
+import { CustomSearch } from "@/components/Search";
+import { CustomError } from "@/components/Error";
+import { CustomLoading } from "@/components/Loading";
 import { MovieCard } from "@/components/MovieCard";
-export const TopRatedTv = () => {
+import { getOnTheAirTv } from "@/services/apis";
+import { getSearchTv } from "../../services/apis";
+export const OnTheAir = () => {
 
     //
     const [tvs, setTvs] = useState([]);
@@ -30,7 +31,7 @@ export const TopRatedTv = () => {
                 pTvs = await getSearchTv(query, page);
             } else {
                 //normal data
-                pTvs = await getTopReatedTv(page);
+                pTvs = await getOnTheAirTv(page);
             }
 
             setTvs(pTvs.results);
@@ -65,7 +66,7 @@ export const TopRatedTv = () => {
                 {/* HEADER */}
                 <div className="gap-4 mb-6">
                     <h1 className="text-2xl md:text-4xl font-bold">
-                        Top Rated Tv Series
+                        On Air Tv Series
                     </h1>
 
                 </div>

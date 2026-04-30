@@ -96,6 +96,15 @@ export const getTopReatedTv = async (page = 1) => {
 };
 
 //
+export const getOnTheAirTv = async (page = 1) => {
+  const res = await axios.get("/tv/on_the_air", { params: { page } });
+  return {
+    results: res.data.results,
+    totalPages: res.data.total_pages,
+  };
+};
+
+//
 export const getSearchTv = async (query, page = 1) => {
   const res = await axios.get("/search/tv", {
     params: {
