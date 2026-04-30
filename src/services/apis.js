@@ -137,3 +137,8 @@ export const getTvDetails = async (id) => {
     videos: videos.status === "fulfilled" ? videos.value.data.results : [],
   };
 };
+
+export const getTvSeasonDetails = async (series_id, season_number) => {
+  const res = await axios.get(`/tv/${series_id}/season/${season_number}`);
+  return res.data;
+};

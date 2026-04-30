@@ -10,6 +10,7 @@ import { Toprated } from '@/pages/movies/Toprated'
 import { UpcomingMovie } from '@/pages/movies/UpcomingMovie'
 import { PopularTv } from '@/pages/tv/PopularTv'
 import { TvDetails } from './pages/tv/TvDetails'
+import { SeasonDetails } from './pages/tv/SeasonDetails'
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
           {/* tv */}
           <Route path='/tv' element={<PopularTv />} />
           <Route path='/tv-series/:id' element={< TvDetails />} />
+          <Route path='/tv-series/:id/season/:season_number' element={< SeasonDetails />} />
 
           {/* <Route path='/' element={< Home />} /> */}
         </Routes>

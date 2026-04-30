@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { getTvDetails } from "../../services/apis";
 import { MovieCard } from "@/components/MovieCard";
 
@@ -8,23 +8,33 @@ export const TvDetails = () => {
 
     const { id } = useParams();
 
+    //
     const [tv, setTv] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
+    //
+    const navigate = useNavigate();
+
+    //
     const loadDetails = async () => {
         setLoading(true);
 
         try {
             const data = await getTvDetails(id);
-            console.log('dd', data.similar);
 
             setTv(data);
+
         } catch (err) {
             console.log(err)
             setError("Fail to load details");
         } finally {
             setLoading(false);
         }
+    }
+
+    const handleClick = () => {
+        // if
     }
 
     useEffect(() => {
@@ -157,7 +167,7 @@ export const TvDetails = () => {
             <Section title="Seasons">
                 <div className="flex gap-4 overflow-x-auto scroll-smooth firefox-scroll space-y-4 pb-2">
                     {tv.seasons?.map((season) => (
-                        <div key={season.id} className="min-w-32 text-center">
+                        <div onClick={() => navigate(`/tv-series/${tv.id}/season/${season.season_number}`)} key={season.id} className="min-w-32 text-center">
 
                             <img
                                 src={`https://image.tmdb.org/t/p/w300${season.poster_path}`}
