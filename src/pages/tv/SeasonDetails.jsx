@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { getTvSeasonDetails } from "../../services/apis";
 import { useEffect, useState } from "react";
 import { CustomError } from "../../components/Error";
@@ -12,6 +12,9 @@ export const SeasonDetails = () => {
     const [season, setSeason] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    //
+    const navigate = useNavigate();
 
     //
     const loadSeasonDetails = async () => {
@@ -52,7 +55,7 @@ export const SeasonDetails = () => {
         </div>
     );
     return (
-        <div className="py-32 px-5 md:px-10 mx-auto relative overflow-hidden">
+        <div className="py-32 px-5 md:px-50 mx-auto relative overflow-hidden">
 
             {/* HERO SECTION */}
             <div className="flex flex-col md:flex-row gap-6">
@@ -81,6 +84,7 @@ export const SeasonDetails = () => {
                     {season.episodes.map((ep) => (
                         <div
                             key={ep.id}
+                            onClick={() => navigate(`/tv-series/${id}/season/${season_number}/episode/${ep.episode_number}`)}
                             className="flex flex-col md:flex-row gap-4 bg-gray-900 p-4 rounded-xl hover:bg-gray-800 transition"
                         >
                             {/* Episode Image */}

@@ -87,6 +87,15 @@ export const getPopularTv = async (page = 1) => {
 };
 
 //
+export const getTopReatedTv = async (page = 1) => {
+  const res = await axios.get("/tv/top_rated", { params: { page } });
+  return {
+    results: res.data.results,
+    totalPages: res.data.total_pages,
+  };
+};
+
+//
 export const getSearchTv = async (query, page = 1) => {
   const res = await axios.get("/search/tv", {
     params: {
@@ -138,7 +147,20 @@ export const getTvDetails = async (id) => {
   };
 };
 
+//
 export const getTvSeasonDetails = async (series_id, season_number) => {
   const res = await axios.get(`/tv/${series_id}/season/${season_number}`);
+  return res.data;
+};
+
+//
+export const getTvEpisodeDetails = async (
+  series_id,
+  season_number,
+  episode_number,
+) => {
+  const res = await axios.get(
+    `/tv/${series_id}/season/${season_number}/episode/${episode_number}`,
+  );
   return res.data;
 };
