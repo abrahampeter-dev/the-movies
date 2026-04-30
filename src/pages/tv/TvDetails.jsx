@@ -167,7 +167,7 @@ export const TvDetails = () => {
             <Section title="Seasons">
                 <div className="flex gap-4 overflow-x-auto scroll-smooth firefox-scroll space-y-4 pb-2">
                     {tv.seasons?.map((season) => (
-                        <div onClick={() => navigate(`/tv-series/${tv.id}/season/${season.season_number}`)} key={season.id} className="min-w-32 text-center">
+                        <div onClick={() => navigate(`/tv-series/${tv.id}/season/${season.season_number}`)} key={season.id} className="min-w-32 text-center cursor-pointer">
 
                             <img
                                 src={`https://image.tmdb.org/t/p/w300${season.poster_path}`}

@@ -15,7 +15,7 @@ const navLinks = [
     {
         href: "/tv-series", label: "TV Series", sub: [
             { href: "/tv", label: "Popular" },
-            { href: "/movies/top-rated", label: "Top Rated" },
+            { href: "/tv/top-rated", label: "Top Rated" },
             { href: "/movies/all-tv-series", label: "All Tv Series" },
         ],
     },

@@ -85,7 +85,7 @@ export const SeasonDetails = () => {
                         <div
                             key={ep.id}
                             onClick={() => navigate(`/tv-series/${id}/season/${season_number}/episode/${ep.episode_number}`)}
-                            className="flex flex-col md:flex-row gap-4 bg-gray-900 p-4 rounded-xl hover:bg-gray-800 transition"
+                            className="flex flex-col md:flex-row gap-4 bg-gray-900 p-4 rounded-xl hover:bg-gray-800 transition cursor-pointer"
                         >
                             {/* Episode Image */}
                             <img
