@@ -71,7 +71,7 @@ export const TopRatedTv = () => {
                 </div>
 
                 {/* error */}
-                {error && !loading && <CustomError text={error} onRetry={loadMovies} />}
+                {error && !loading && <CustomError text={error} onRetry={loadTvs} />}
                 {/* tv series data */}
                 {
                     loading ? <CustomLoading text="Loading tv series..." />

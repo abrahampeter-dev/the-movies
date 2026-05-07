@@ -13,7 +13,7 @@ const navLinks = [
         ],
     },
     {
-        href: "/tv-series", label: "TV Series", sub: [
+        href: "/tv", label: "TV Series", sub: [
             { href: "/tv", label: "Popular" },
             { href: "/tv/top-rated", label: "Top Rated" },
             { href: "/tv/on-the-air", label: "On Tv" },
@@ -61,9 +61,9 @@ export const Navbar = () => {
                                 if (link.sub) {
                                     return (
                                         <div key={index} className="relative group">
-                                            <span className="px-5 py-2 text-sm text-muted-foreground hover:text-foreground rounded-full hover:bg-surface cursor-pointer">
+                                            <Link to={link.href} className="px-5 py-2 text-sm text-muted-foreground hover:text-foreground rounded-full hover:bg-surface cursor-pointer">
                                                 {link.label}
-                                            </span>
+                                            </Link>
 
                                             {/* Dropdown menu */}
                                             <div className="absolute left-0 top-full mt-2 w-40 rounded-xl bg-surface shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">

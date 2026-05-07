@@ -253,7 +253,7 @@ export const TvDetails = () => {
                                 rate={m.vote_average}
                                 id={m.id}
                                 showFav={false}
-                                to={({ id }) => `/tv/${id}`}
+                                to={({ id }) => `/tv-series/${id}`}
                             />
                         </div>
                     ))}

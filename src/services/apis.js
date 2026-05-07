@@ -173,3 +173,15 @@ export const getTvEpisodeDetails = async (
   );
   return res.data;
 };
+
+//============ Trending ===============//
+
+export const getAllTrending = async (timeWindow, page = 1) => {
+  const res = await axios.get(`/trending/all/${timeWindow}`, {
+    params: { page },
+  });
+  return {
+    results: res.data.results,
+    totalPages: res.data.total_pages,
+  };
+};
