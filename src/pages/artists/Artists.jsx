@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getAllArtists, getSearchArtist } from "../../services/apis";
 import { CustomError } from "@/components/Error";
 import { CustomLoading } from "@/components/Loading";
+import { Link } from "react-router-dom";
 
 // export const Artists = () => {
 
@@ -177,147 +178,64 @@ export const Artists = () => {
                             ? `https://image.tmdb.org/t/p/w500${person.profile_path}`
                             : "https://placehold.co/500x750?text=No+Image";
 
+                        const link = `/artists/${person.id}`;
                         return (
-                            <div className="bg-gray-900 rounded-2xl overflow-hidden hover:bg-gray-800 transition-all duration-300 hover:-translate-y-1">
+                            <Link key={person.id} to={link} className="group" >
+                                <div className="bg-gray-900 rounded-2xl overflow-hidden hover:bg-gray-800 transition-all duration-300 hover:-translate-y-1">
 
-                                {/* Artist Image */}
-                                <div className="relative overflow-hidden">
+                                    {/* Artist Image */}
+                                    <div className="relative overflow-hidden">
 
-                                    <img
-                                        src={image}
-                                        alt={person.name}
-                                        className="w-full h-72 object-cover group-hover:scale-105 transition duration-300"
-                                    />
+                                        <img
+                                            src={image}
+                                            alt={person.name}
+                                            className="w-full h-72 object-cover group-hover:scale-105 transition duration-300"
+                                        />
 
-                                    {/* Department Badge */}
-                                    <div className="absolute top-3 left-3 bg-black/70 backdrop-blur px-3 py-1 rounded-full text-xs">
-                                        {person.known_for_department}
-                                    </div>
-
-                                </div>
-
-                                {/* Info */}
-                                <div className="p-4">
-
-                                    {/* Name */}
-                                    <h2 className="text-lg font-bold line-clamp-1">
-                                        {person.name}
-                                    </h2>
-
-                                    {/* Popularity */}
-                                    <p className="text-sm text-gray-400 mt-1">
-                                        Popularity: {person.popularity?.toFixed(1)}
-                                    </p>
-
-                                    {/* Known For */}
-                                    <div className="mt-4 flex flex-wrap gap-2">
-
-                                        {person.known_for
-                                            ?.slice(0, 3)
-                                            .map((movie) => (
-
-                                                <span
-                                                    key={movie.id}
-                                                    className="text-xs bg-gray-800 px-2 py-1 rounded-full line-clamp-1"
-                                                >
-                                                    {movie.title || movie.name}
-                                                </span>
-
-                                            ))}
+                                        {/* Department Badge */}
+                                        <div className="absolute top-3 left-3 bg-black/70 backdrop-blur px-3 py-1 rounded-full text-xs">
+                                            {person.known_for_department}
+                                        </div>
 
                                     </div>
 
+                                    {/* Info */}
+                                    <div className="p-4">
+
+                                        {/* Name */}
+                                        <h2 className="text-lg font-bold line-clamp-1">
+                                            {person.name}
+                                        </h2>
+
+                                        {/* Popularity */}
+                                        <p className="text-sm text-gray-400 mt-1">
+                                            Popularity: {person.popularity?.toFixed(1)}
+                                        </p>
+
+                                        {/* Known For */}
+                                        <div className="mt-4 flex flex-wrap gap-2">
+
+                                            {person.known_for
+                                                ?.slice(0, 3)
+                                                .map((movie) => (
+
+                                                    <span
+                                                        key={movie.id}
+                                                        className="text-xs bg-gray-800 px-2 py-1 rounded-full line-clamp-1"
+                                                    >
+                                                        {movie.title || movie.name}
+                                                    </span>
+
+                                                ))}
+
+                                        </div>
+
+                                    </div>
+
                                 </div>
+                            </Link>
 
-                            </div>
-                            // <div
-                            //     key={person.id}
-                            //     className="bg-gray-900 rounded-2xl overflow-hidden hover:bg-gray-800 transition-all duration-300 group"
-                            // >
 
-                            //     {/* Artist Image */}
-                            //     <div className="relative overflow-hidden">
-                            //         <img
-                            //             src={image}
-                            //             alt={person.name}
-                            //             className="w-full h-72 object-cover group-hover:scale-105 transition duration-300"
-                            //         />
-
-                            //         {/* Department Badge */}
-                            //         <div className="absolute top-3 left-3 bg-black/70 backdrop-blur px-3 py-1 rounded-full text-xs">
-                            //             {person.known_for_department}
-                            //         </div>
-                            //     </div>
-
-                            //     {/* Info */}
-                            //     <div className="p-4">
-
-                            //         {/* Name */}
-                            //         <h2 className="text-lg font-bold line-clamp-1">
-                            //             {person.name}
-                            //         </h2>
-
-                            //         {/* Popularity */}
-                            //         <p className="text-sm text-gray-400 mt-1">
-                            //             Popularity: {person.popularity?.toFixed(1)}
-                            //         </p>
-
-                            //         {/* Known For */}
-                            //         <div className="mt-4">
-                            //             <h3 className="text-sm font-semibold mb-2 text-gray-300">
-                            //                 Known For
-                            //             </h3>
-
-                            //             <div className="space-y-2">
-
-                            //                 {person.known_for?.slice(0, 3).map((movie) => (
-
-                            //                     <div
-                            //                         key={movie.id}
-                            //                         className="flex gap-3 items-center bg-gray-800 rounded-lg p-2"
-                            //                     >
-
-                            //                         {/* Poster */}
-                            //                         <img
-                            //                             src={
-                            //                                 movie.poster_path
-                            //                                     ? `https://image.tmdb.org/t/p/w200${movie.poster_path}`
-                            //                                     : "https://placehold.co/200x300?text=No+Image"
-                            //                             }
-                            //                             alt={movie.title}
-                            //                             className="w-12 h-16 object-cover rounded"
-                            //                         />
-
-                            //                         {/* Movie Info */}
-                            //                         <div className="flex-1 min-w-0">
-
-                            //                             <p className="text-sm font-medium line-clamp-1">
-                            //                                 {movie.title || movie.name}
-                            //                             </p>
-
-                            //                             <p className="text-xs text-gray-400">
-                            //                                 {
-                            //                                     movie.release_date?.split("-")[0] ||
-                            //                                     movie.first_air_date?.split("-")[0]
-                            //                                 }
-                            //                             </p>
-
-                            //                             <p className="text-xs text-yellow-400">
-                            //                                 ⭐ {movie.vote_average}
-                            //                             </p>
-
-                            //                         </div>
-
-                            //                     </div>
-
-                            //                 ))}
-
-                            //             </div>
-                            //         </div>
-
-                            //     </div>
-
-                            // </div>
                         );
                     })}
 

@@ -15,6 +15,7 @@ import { EpisodeDetails } from '@/pages/tv/EpisodeDetails'
 import { TopRatedTv } from '@/pages/tv/TopRatedTv'
 import { OnTheAir } from '@/pages/tv/OnTheAir'
 import { Artists } from '@/pages/artists/Artists'
+import { ArtistDetail } from './pages/artists/ArtistDetails'
 
 function App() {
 
@@ -49,7 +50,8 @@ function App() {
 
           {/* artists */}
           <Route path='/artists' element={< Artists />} />
-          {/* <Route path='/' element={< Home />} /> */}
+          <Route path='/artists/:id' element={< ArtistDetail />} />
+
         </Routes>
 
       </main>

@@ -209,3 +209,24 @@ export const getSearchArtist = async (query, page = 1) => {
     totalPages: res.data.total_pages,
   };
 };
+
+//
+export const getArtistDetails = async (id) => {
+  const res = await Promise.allSettled([
+    //
+    axios.get(`/person/${id}`),
+
+    //
+    axios.get(`/person/${id}/combined_credits`),
+  ]);
+
+  const [details, credits] = res;
+
+  return {
+    //
+    ...(details.status === "fulfilled" ? details.value.data : {}),
+
+    //
+    cast: credits.status === "fulfilled" ? credits.value.data.cast : [],
+  };
+};
