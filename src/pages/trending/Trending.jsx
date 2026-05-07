@@ -4,7 +4,7 @@ import { CustomSearch } from "@/components/Search";
 import { CustomError } from "@/components/Error";
 import { CustomLoading } from "@/components/Loading";
 import { MovieCard } from "@/components/MovieCard";
-import { getAllTrending } from "../services/apis";
+import { getAllTrending } from "@/services/apis";
 import { Tabs } from "@/components/Tabs";
 
 export const Trending = () => {
@@ -36,14 +36,12 @@ export const Trending = () => {
             } else {
                 //normal data
                 ptrending = await getAllTrending(timeWindow, page);
-                console.log(timeWindow, ptrending);
 
             }
 
             setTrending(ptrending.results);
             setTotalPages(ptrending.totalPages);
 
-            console.log(ptrending);
         } catch (err) {
             console.log(err)
             setError("Fail to load tv series");
@@ -159,14 +157,6 @@ export const Trending = () => {
         loadtrending();
     }, [timeWindow, page, query]);
 
-    // if (loading) {
-    //     return (
-    //         <div className="flex justify-center items-center h-screen">
-    //             <CustomLoading />
-    //             {/* <div className="w-10 h-10 border-4 border-gray-300 border-t-primary rounded-full animate-spin"></div> */}
-    //         </div>
-    //     );
-    // }
 
     if (!trending) return (
         <div className="flex justify-center items-center h-screen">
@@ -176,8 +166,6 @@ export const Trending = () => {
 
     return (
         <div className="py-32 relative overflow-hidden">
-
-
 
             {/* search */}
             <CustomSearch onSearch={searchTv} />

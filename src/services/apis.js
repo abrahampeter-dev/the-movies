@@ -185,3 +185,27 @@ export const getAllTrending = async (timeWindow, page = 1) => {
     totalPages: res.data.total_pages,
   };
 };
+
+//============ Trending ===============//
+
+export const getAllArtists = async (page = 1) => {
+  const res = await axios.get("/person/popular", {
+    params: { page },
+  });
+
+  return {
+    results: res.data.results,
+    totalPages: res.data.total_pages,
+  };
+};
+
+//
+export const getSearchArtist = async (query, page = 1) => {
+  const res = await axios.get("/search/person", {
+    params: { query, page },
+  });
+  return {
+    results: res.data.results,
+    totalPages: res.data.total_pages,
+  };
+};
