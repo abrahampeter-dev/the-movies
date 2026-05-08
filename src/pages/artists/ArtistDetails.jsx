@@ -20,8 +20,6 @@ export const ArtistDetail = () => {
 
         try {
             const data = await getArtistDetails(id);
-            console.log("details", data);
-
             setArtist(data);
         } catch (err) {
             console.log(err)
@@ -100,17 +98,13 @@ export const ArtistDetail = () => {
 
                             {/* BIO */}
                             <div className="mt-10">
-
                                 <h2 className="text-2xl font-semibold mb-4">
                                     Biography
                                 </h2>
-
                                 <p className="text-gray-300 leading-8 whitespace-pre-line">
                                     {artist?.biography || "No biography available."}
                                 </p>
-
                             </div>
-
                         </div>
 
                     </div>
