@@ -1,4 +1,41 @@
+import { useEffect, useState } from "react";
+import { getAllTrending } from "@/services/apis";
+
 export const Hero = () => {
+
+    const [trend, setTrend] = useState([]);
+
+    //
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    //
+    const [page, setPage] = useState(1);
+    const [timeWindow, setTimeWindow] = useState('day');
+
+    //
+    const loadTrending = async () => {
+        setLoading(true)
+        setError(null);
+
+        try {
+            const data = await getAllTrending(timeWindow, page)
+            setTrend(data.results);
+
+        } catch (err) {
+            console.log(err)
+            setError("Fail to load data");
+        } finally {
+            setLoading(false);
+        }
+
+    }
+
+    //
+    useEffect(() => {
+        loadTrending();
+    }, []);
+
     return (
         <div className="relative min-h-screen overflow-hidden">
             {/* background */}
@@ -16,7 +53,20 @@ export const Hero = () => {
                     <div className="relative w-full h-full overflow-hidden">
                         {/* marquee track */}
                         <div className="flex h-full w-[200%] animate-hero-marquee">
-                            {[...Array(6), ...Array(6)].map((_, i) => (
+                            {trend.map((td) => (
+                                <div
+                                    key={td.id}
+                                    className="shrink-0 w-120 mx-0.3 h-full rounded-sm overflow-hidden bg-primary-foreground"
+                                >
+                                    <img
+                                        src={`https://image.tmdb.org/t/p/w500${td.poster_path}`}
+                                        alt="hero"
+                                        className="w-full h-full object-cover opacity-60"
+                                    />
+                                </div>
+                            ))}
+
+                            {/* {[...Array(12)].map((_, i) => (
                                 <div
                                     key={i}
                                     className="shrink-0 w-120 mx-0.3 h-full rounded-sm overflow-hidden bg-primary-foreground"
@@ -27,7 +77,7 @@ export const Hero = () => {
                                         className="w-full h-full object-cover opacity-60"
                                     />
                                 </div>
-                            ))}
+                            ))} */}
                         </div>
                     </div>
                 </div>
