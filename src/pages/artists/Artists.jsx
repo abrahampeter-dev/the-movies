@@ -127,7 +127,7 @@ export const Artists = () => {
     }, [query, page]);
 
     //search
-    const searchTv = async (searchQ) => {
+    const searchArtist = async (searchQ) => {
         setQuery(searchQ);
         setPage(1);
     }
@@ -152,7 +152,7 @@ export const Artists = () => {
         <div className="py-32 relative overflow-hidden">
 
             {/* search */}
-            <CustomSearch onSearch={searchTv} />
+            <CustomSearch onSearch={searchArtist} />
 
             <div className="container mx-auto px-4 md:px-1 lg:px-6">
 

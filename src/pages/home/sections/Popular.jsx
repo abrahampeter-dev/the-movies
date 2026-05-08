@@ -7,6 +7,7 @@ import { getPopularTv, getPopularMovies } from "@/services/apis";
 export const Popular = () => {
 
     const [movies, setMovies] = useState([]);
+    const [slides, setSlides] = useState([]);
 
     //
     const [error, setError] = useState(null);
@@ -15,6 +16,10 @@ export const Popular = () => {
     //
     const [page, setPage] = useState(1);
     const [mediaType, setMediaType] = useState('movie');
+
+    //
+    const [active, setActive] = useState(0);
+
 
     //
     const loadWhatsPopular = async () => {
@@ -41,6 +46,30 @@ export const Popular = () => {
         } catch (err) {
             console.log(err)
             setError("Fail to load data");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    //
+    const loadSlides = async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+
+            const data = await getPopularMovies(page);
+
+            //
+            const images = data.results.filter((m) => m.backdrop_path)
+                .slice(0, 5)
+                .map((m) => `https://image.tmdb.org/t/p/original${m.backdrop_path}`);
+
+
+            setSlides(images);
+
+        } catch (err) {
+            setError("Fail to load slides");
         } finally {
             setLoading(false);
         }
@@ -112,21 +141,57 @@ export const Popular = () => {
 
     useEffect(() => {
         loadWhatsPopular();
+        loadSlides();
     }, [mediaType]);
 
-    return (
-        <section className="py-12 relative overflow-hidden">
-            <div className="container mx-auto px-1 lg:px-6">
-                <Tabs
-                    title="What's Popular"
-                    items={tabItems}
-                    defaultTab="movie"
-                    onChange={tabChange}
 
-                />
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActive((prev) => (prev + 1) % slides.length);
+        }, 20000);
+
+        return () => clearInterval(interval);
+    }, [slides]);
+
+    return (
+        <section className="relative min-h-[60vh] my-4 pb-10 flex flex-col justify-center">
+
+            {/* background slideshow */}
+            <div className="absolute inset-0 overflow-hidden">
+
+                {slides.map((img, i) => (
+                    <img
+                        key={i}
+                        src={img}
+                        alt="upcoming"
+                        className={`
+                    absolute inset-0 w-full h-full
+                    object-cover object-top md:object-[center_12%]
+                    transition-opacity duration-1000 ease-in-out
+                    ${i === active ? "opacity-100" : "opacity-0"}
+                `}
+                    />
+                ))}
+
+                <div className="absolute inset-0 bg-black/75" />
+            </div>
+
+            {/* content */}
+            <div className="relative z-10 h-full flex flex-col justify-end">
+                <div className="container mx-auto px-1 lg:px-6">
+                    <Tabs
+                        title="What's Popular"
+                        items={tabItems}
+                        defaultTab="movie"
+                        onChange={tabChange}
+
+                    />
+                </div>
             </div>
 
         </section>
+
+        // </section>
     );
 
 }

@@ -4,20 +4,92 @@ import { Trending } from "./sections/Trending";
 import { Popular } from "./sections/Popular";
 import { Tabs } from "@/components/Tabs";
 import { MovieCard } from "../../components/MovieCard";
+import { getAllArtists, getOnTheAirTv, getPopularMovies } from "../../services/apis";
 
 export const Home = () => {
 
-    const slides = [
-        "/pggg2.jpeg",
-        "/pggg.jpeg"
-    ];
+    const [movies, setMovies] = useState([]);
+    const [latest, setLatest] = useState([]);
+    const [slides, setSlides] = useState([]);
+    const [mediaType, setMediaType] = useState('movie');
+
+    //
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+
+    //
+    const [page, setPage] = useState(1);
+
+
+    //
+    const loadSlides = async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+
+            const data = await getPopularMovies(page);
+
+            //
+            const images = data.results.filter((m) => m.backdrop_path)
+                .slice(0, 5)
+                .map((m) => `https://image.tmdb.org/t/p/original${m.backdrop_path}`);
+
+
+            setSlides(images);
+
+        } catch (err) {
+            setError("Fail to load slides");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    //
+    const loadLatest = async () => {
+        setLoading(true);
+        setError(null);
+
+        try {
+
+            let data;
+
+            if (mediaType === "mv") {
+
+            } else {
+                data = await getOnTheAirTv(page);
+            }
+            setLatest(data.results);
+
+        } catch (err) {
+            console.log(err)
+            setError("Fail to load tv series");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    //
+    const tabChange = (tabId) => {
+        setMediaType(tabId);
+        setPage(1);
+    }
+
+    //
+    useEffect(() => {
+        loadSlides();
+        loadLatest();
+    }, [mediaType]);
+
+
 
     const [active, setActive] = useState(0);
 
     const tabItems = [
         {
-            id: "today",
-            title: "Today",
+            id: "movie",
+            title: "upcoming",
             content: <div className="flex gap-4 overflow-x-auto scroll-smooth firefox-scroll ">
                 {
                     [...Array(20)].map((_, ind) => (
@@ -27,13 +99,30 @@ export const Home = () => {
             </div>
         },
         {
-            id: "week",
-            title: "This Week",
+            id: "tv",
+            title: "On Tv",
             content: <div className="flex gap-4 overflow-x-auto scroll-smooth firefox-scroll py-4">
                 {
-                    [...Array(20)].map((_, ind) => (
-                        <MovieCard key={ind} image="/pggg2.jpeg" title="Peaky Blinder" year="2013" showFav={false} display="video" />
-                    ))
+                    latest.map((td) => {
+                        const link = `/tv-series/${td.id}`
+
+                        return (
+
+                            <MovieCard
+                                key={td.id}
+                                image={`https://image.tmdb.org/t/p/w500${td.poster_path}`}
+                                title={td.name}
+                                year={td.first_air_date}
+                                type={"TV"}
+                                rate={td.vote_average}
+                                showFav={false}
+                                id={td.id}
+                                to={link}
+                                display="video"
+
+                            />
+                        )
+                    })
                 }
             </div>
         },
@@ -46,7 +135,8 @@ export const Home = () => {
         }, 20000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [slides]);
+
     return (
         <main className="">
             {/* Hero section */}
@@ -55,48 +145,10 @@ export const Home = () => {
             {/* trending section */}
             <Trending />
 
-            {/* latest upcoming, top-rated */}
-            {/* <section className="py-12 relative overflow-hidden my-4">
-                <div className="container-fluid mx-auto h-100 px-1 lg:px-6 py-4 bg-primary-foreground">
+            {/* whats popular */}
 
-                </div>
 
-            </section> */}
 
-            <section className="relative h-[49vh] overflow-hidden my-4">
-                {/* background slideshow */}
-                <div className="absolute inset-0">
-                    {slides.map((img, i) => (
-                        <img
-                            key={i}
-                            src={img}
-                            alt="upcoming"
-                            className={`
-                            absolute inset-0 w-full h-full
-                            object-cover object-top md:object-[center_12%]
-                            transition-opacity duration-1000 ease-in-out
-                            ${i === active ? "opacity-100" : "opacity-0"}
-                        `}
-                        />
-                    ))}
-
-                    {/* overlay */}
-                    {/* <div className="absolute inset-0 bg-primary/50 z-10 pointer-events-none" /> */}
-                    <div className="absolute inset-0 bg-black/75" />
-                </div>
-
-                {/* content */}
-                <div className="relative z-10 h-full flex items-end">
-                    <div className="container mx-auto px-6 pb-16">
-                        <Tabs
-                            title="Trending"
-                            items={tabItems}
-                            defaultTab="today"
-
-                        />
-                    </div>
-                </div>
-            </section>
 
 
             {/* Popular Section */}
