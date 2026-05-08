@@ -24,11 +24,10 @@ export const Trending = () => {
         try {
             const data = await getAllTrending(timeWindow, page)
             setTrend(data.results);
-            console.log(data);
 
         } catch (err) {
             console.log(err)
-            setError("Fail to load tv series");
+            setError("Fail to load data");
         } finally {
             setLoading(false);
         }
